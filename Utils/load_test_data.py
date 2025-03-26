@@ -46,23 +46,6 @@ def load_test_image_arrays_sequoia(image_size, dir_path):
 
 
 
-
-def load_test_images(image_size, dir_path):
-    SIZE_X = image_size 
-    SIZE_Y = image_size
-    n_classes=3 
-    test_images = []
-
-    for directory_path in glob.glob(dir_path):
-        for img_path in tqdm(glob.glob(os.path.join(directory_path, "*.png"))):
-            img = cv2.imread(img_path, cv2.IMREAD_UNCHANGED)    
-            img = cv2.resize(img, (SIZE_Y, SIZE_X))
-            test_images.append(img)                  
-    test_images = np.array(test_images)
-    return test_images
-
-
-
 def load_test_masks(image_size, dir_path):
     SIZE_X, SIZE_Y = image_size, image_size
     test_masks = [] 
