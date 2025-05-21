@@ -170,6 +170,56 @@ def load_train_image_arrays_selective_augs_sequoia(image_size, dir_path, augs):
 
 
 
+def load_train_images_selective_augs(image_size, dir_path, augs):
+    #Resizing images, if needed
+    SIZE_X = image_size 
+    SIZE_Y = image_size
+    n_classes=3 
+    train_images = []    
+    for directory_path in glob.glob(dir_path):
+        for img_path in tqdm(glob.glob(os.path.join(directory_path, "*.png"))):
+
+            img_org = cv2.imread(img_path, cv2.IMREAD_UNCHANGED) 
+            img = cv2.resize(img_org, (SIZE_X, SIZE_Y))
+            train_images.append(img)
+            flipped_horizontal = cv2.flip(img_org, 1)
+            flipped_horizontal = cv2.resize(flipped_horizontal, (SIZE_X, SIZE_Y))
+            if 1 in augs:
+                train_images.append(flipped_horizontal)
+
+
+            if 2 in augs:
+                flipped_vertical = cv2.flip(img_org, 0)
+                flipped_vertical = cv2.resize(flipped_vertical, (SIZE_X, SIZE_Y))
+                train_images.append(flipped_vertical)
+
+            if 3 in augs:
+                flipped_both = cv2.flip(img_org, -1)
+                flipped_both = cv2.resize(flipped_both, (SIZE_X, SIZE_Y))
+                train_images.append(flipped_both)
+    
+            if 4 in augs:
+                rotated_90 = cv2.rotate(img_org, cv2.ROTATE_90_CLOCKWISE)
+                rotated_90 = cv2.resize(rotated_90, (SIZE_X, SIZE_Y))
+
+            if 5 in augs:
+                rotated_270 = cv2.rotate(img_org, cv2.ROTATE_90_COUNTERCLOCKWISE)
+                rotated_270 = cv2.resize(rotated_270, (SIZE_X, SIZE_Y))
+
+            if 6 in augs:
+                flipped_rotated_90 = cv2.rotate(flipped_horizontal, cv2.ROTATE_90_CLOCKWISE)
+                flipped_rotated_90 = cv2.resize(flipped_rotated_90, (SIZE_X, SIZE_Y))
+                train_images.append(flipped_rotated_90)
+
+            if 7 in augs:
+                flipped_rotated_270 = cv2.rotate(flipped_horizontal, cv2.ROTATE_90_COUNTERCLOCKWISE)
+                flipped_rotated_270 = cv2.resize(flipped_rotated_270, (SIZE_X, SIZE_Y))
+                train_images.append(flipped_rotated_270)
+                
+            else:
+                pass
+
+
 
 def load_train_masks_selective_augs(image_size, dir_path, augs):
     SIZE_X = image_size 

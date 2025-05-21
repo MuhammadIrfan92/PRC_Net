@@ -56,3 +56,25 @@ def load_test_masks(image_size, dir_path):
             test_masks.append(mask)
     test_masks = np.array(test_masks)
     return test_masks
+
+
+
+def load_test_images(image_size, dir_path):
+    #Resizing images, if needed
+    SIZE_X = image_size 
+    SIZE_Y = image_size
+    n_classes=3 #Number of classes for segmentation
+
+    #Capture testing image info as a list
+    test_images = []
+
+    for directory_path in glob.glob(dir_path):
+        for img_path in tqdm(glob.glob(os.path.join(directory_path, "*.png"))):
+
+            img = cv2.imread(img_path, cv2.IMREAD_UNCHANGED)    
+            img = cv2.resize(img, (SIZE_Y, SIZE_X))
+            test_images.append(img)            
+        
+    #Convert list to array for machine learning processing        
+    test_images = np.array(test_images)
+    return test_images
