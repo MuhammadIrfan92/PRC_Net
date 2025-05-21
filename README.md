@@ -10,3 +10,7 @@ Datasets used in this study can be downloaded from the following links: \
 ## Environment Setup:
 
 Use the [requirements.txt](https://github.com/MuhammadIrfan92/PRC_Net/blob/main/requirements.txt) to setup the experimental environment.
+
+## Channel Merging for Weedmap dataset (RedEdge & Sequoia)
+
+Use the [preprocess.ipynb](https://github.com/MuhammadIrfan92/PRC_Net/blob/main/preprocess.ipynb) notebook to merge individual channels prior to model training.
