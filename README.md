@@ -14,3 +14,7 @@ Use the [requirements.txt](https://github.com/MuhammadIrfan92/PRC_Net/blob/main/
 ## Channel Merging for Weedmap dataset (RedEdge & Sequoia)
 
 Use the [preprocess.ipynb](https://github.com/MuhammadIrfan92/PRC_Net/blob/main/preprocess.ipynb) notebook to merge individual channels prior to model training.
+
+## Setting up Llama 3.0 for UAV Field Intelligence Applicaiton
+
+Follow the Ollama GitHub repository to setup [LlaMA](https://ai.meta.com/blog/meta-llama-3/) 3.0 for the UAV Field Intelligence Applicaiton. [Ollama](https://github.com/ollama/ollama-python)
