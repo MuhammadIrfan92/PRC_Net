@@ -74,7 +74,7 @@ def compute_class_distribution(mask):
         "weed": 2
     }
     distribution = {}
-    total_pixels = 320 * 320  # Assumes mask is 320x320
+    total_pixels = 320 * 320  
 
     for cls, id in class_labels.items():
         pixels = np.sum(mask == id)
@@ -151,9 +151,7 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
-# uploaded = st.file_uploader("📤 Upload UAV image")
 
-# st.markdown("</div>", unsafe_allow_html=True)
 
 holder = st.empty()
 bottom_image = holder.file_uploader('📤 Upload UAV image (if you upload an unspported image, a sample image will be used to demonstrate the applications workflow)')
@@ -161,7 +159,6 @@ bottom_image = holder.file_uploader('📤 Upload UAV image (if you upload an uns
 # if uploaded:
 if bottom_image is not None:
     # Preprocess and display success message
-    # img_org = preprocess_img(np.load(uploaded))
     try:
         img_org = preprocess_img(np.load(bottom_image))
         holder.empty()
@@ -206,9 +203,6 @@ if bottom_image is not None:
         **🌱 Crop:** {class_stats['crop']}%  
         **🌿 Weed:** {class_stats['weed']}%
         """)
-        # # Visual divider
-        # st.markdown("""<hr style="margin: 2rem 0;">""", unsafe_allow_html=True)
-
     # First inject CSS to control spacing
     st.markdown(
         """

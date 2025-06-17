@@ -8,37 +8,17 @@ from tensorflow.keras import backend as K
 import cv2
 
 def global_covariance_pooling(input_tensor):
-    # Step 1: Calculate the global average
     mean = tf.reduce_mean(input_tensor, axis=[1, 2], keepdims=True)
-    
-    # Step 2: Center the features by subtracting the mean
     centered_features = input_tensor - mean
-    
-    # Step 3: Calculate the covariance
-    # For batch processing, we can use einsum to compute outer products and averages over spatial dimensions
     cov_matrix = tf.einsum('...ijc,...ijd->...cd', centered_features, centered_features)
     cov_matrix /= tf.cast(tf.shape(input_tensor)[1] * tf.shape(input_tensor)[2], tf.float32)
-    
-    # Optional Step 4: Apply matrix power normalization (e.g., matrix square root)
-    # You can use TensorFlow's linear algebra operations here if needed
-
     return cov_matrix
 
 def global_covariance_pooling(input_tensor):
-    # Step 1: Calculate the global average
     mean = tf.reduce_mean(input_tensor, axis=[1, 2], keepdims=True)
-    
-    # Step 2: Center the features by subtracting the mean
     centered_features = input_tensor - mean
-    
-    # Step 3: Calculate the covariance
-    # For batch processing, we can use einsum to compute outer products and averages over spatial dimensions
     cov_matrix = tf.einsum('...ijc,...ijd->...cd', centered_features, centered_features)
     cov_matrix /= tf.cast(tf.shape(input_tensor)[1] * tf.shape(input_tensor)[2], tf.float32)
-    
-    # Optional Step 4: Apply matrix power normalization (e.g., matrix square root)
-    # You can use TensorFlow's linear algebra operations here if needed
-
     return cov_matrix
 
 # Example usage within a Keras model
@@ -47,7 +27,6 @@ class GlobalCovPoolingLayer(tf.keras.layers.Layer):
         super(GlobalCovPoolingLayer, self).__init__(**kwargs)
     
     def build(self, input_shape):
-        # Create weights, biases, etc. if needed
         super(GlobalCovPoolingLayer, self).build(input_shape)
     
     def call(self, inputs):
@@ -61,10 +40,8 @@ class GlobalCovPoolingLayer(tf.keras.layers.Layer):
 
 def perform_inference(model_path, img):
 
-    # Loading Model
     try:
         model = load_model(model_path, custom_objects={"GlobalCovPoolingLayer": GlobalCovPoolingLayer, f"ccfl_dice": ccfl_dice}) # loads model
-        # loading image:
         test_img = normalize(img)
 
         model_output = model.predict(test_img)
@@ -77,7 +54,3 @@ def perform_inference(model_path, img):
         print(sample_output.shape)
         return sample_output
         
-
-    # # At end of script or after model inference/training
-    # K.clear_session()
-    # tf.keras.backend.clear_session()
